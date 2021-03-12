@@ -78,7 +78,7 @@ We can see that there is a 1 bit at the position which represents 2 ** 2 (k = 2)
 function oneBitsOf(n) {
   let powersOf2 = [];
 
-  for (let k = 0; k <= 30; k++) {
+  for (let k = 0; k < 30; k++) {
     let powerOf2 = 1 << k;
 
     if (n & powerOf2) {
