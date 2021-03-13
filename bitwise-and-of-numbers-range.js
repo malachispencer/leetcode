@@ -94,24 +94,7 @@ m = 16, n = 20 => 16
 10000 = R = 16
 */
 
-function oneBitsOf(n) {
-  let powersOf2 = [];
-
-  for (let k = 0; k < 30; k++) {
-    let powerOf2 = 1 << k;
-
-    if (n & powerOf2) {
-      powersOf2.push([powerOf2, k]);
-    }
-  }
-
-  return powersOf2;
-}
-
-/*
-*/
-
-function rangeBitwiseAnd (left, right) {
+function rangeBitwiseAnd(left, right) {
   let commonPrefix = '';
   
   for (let k = 31; k >= 0; k--) {
@@ -151,4 +134,45 @@ function rangeBitwiseAndX(left, right) {
   }
   
   return answer;
+}
+
+/*
+*/
+
+function rangeBitwiseAndXX(left, right) {
+  left = left.toString(2).padStart(32, '0');
+  right = right.toString(2).padStart(32, '0');
+  let answer = 0;
+  
+  for (let i = 0; i < left.length; i++) {
+    let leftBit = left[i];
+    let rightBit = right[i];
+    
+    if (leftBit != rightBit) {
+      break;
+    }
+    
+    if (leftBit == 1 && rightBit == 1) {
+      answer += 2 ** (31 - i);
+    }
+  }
+  
+  return answer;
+}
+
+/*
+*/
+
+function oneBitsOf(n) {
+  let powersOf2 = [];
+
+  for (let k = 0; k < 30; k++) {
+    let powerOf2 = 1 << k;
+
+    if (n & powerOf2) {
+      powersOf2.push([powerOf2, k]);
+    }
+  }
+
+  return powersOf2;
 }
