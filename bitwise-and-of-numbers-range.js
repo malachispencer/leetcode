@@ -72,7 +72,26 @@ at the position where 2 ** 2 (k = 2) is represented we would do:
 2) 000100 = 1 << 2 = 4
 3) 000100 = 36 & 4
 
-We can see that there is a 1 bit at the position which represents 2 ** 2 (k = 2) i.e. 4. 
+We can see that there is a 1 bit at the position which represents 2 ** 2 (k = 2) i.e. 4.
+
+____Bitwise AND of Range____
+
+m = 7, n = 12 => 0
+0111 = 7
+1000 = 8
+1001 = 9
+1010 = 10
+1011 = 11
+1100 = 12
+0000 = R = 0
+
+m = 16, n = 20 => 16
+10000 = 16
+10001 = 17
+10010 = 18
+10011 = 19
+10100 = 20
+10000 = R = 16
 */
 
 function oneBitsOf(n) {
@@ -87,4 +106,49 @@ function oneBitsOf(n) {
   }
 
   return powersOf2;
+}
+
+/*
+*/
+
+function rangeBitwiseAnd (left, right) {
+  let commonPrefix = '';
+  
+  for (let k = 31; k >= 0; k--) {
+    let left1Bit = left & (1 << k);
+    let right1Bit = right & (1 << k);
+    
+    if (!left1Bit && !right1Bit) {
+      commonPrefix += '0';
+    } else if (left1Bit && right1Bit) {
+      commonPrefix += '1';
+    } else {
+      break;
+    }
+  }
+  
+  commonPrefix = commonPrefix.padEnd(32, '0');
+  return commonPrefix ? parseInt(commonPrefix, 2) : 0;
+}
+
+/*
+*/
+
+function rangeBitwiseAndX(left, right) {
+  let answer = 0;
+  
+  for (let k = 31; k >= 0; k--) {
+    let left1Bit = left & (1 << k);
+    let right1Bit = right & (1 << k);
+    
+    if (left1Bit !== right1Bit) {
+      break;
+    }
+    
+    if (left1Bit && right1Bit) {
+      answer += left1Bit;
+    }
+  }
+  
+  return answer;
 }
