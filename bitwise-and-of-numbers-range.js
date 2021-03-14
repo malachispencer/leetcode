@@ -76,6 +76,18 @@ We can see that there is a 1 bit at the position which represents 2 ** 2 (k = 2)
 
 ____Bitwise AND of Range____
 
+The bitwise AND of all numbers in a given range m to n (inclusive) can be found in the common prefix between the binary representation
+of the first number in the range (m) and the binary representation of the last number in the range (n). We can find the common prefix by
+performing a bitwise AND operation on all the corresponding bits in m and n, or we can simply do a comparison. As long as both are 0 or both 
+are 1, we keep doing so, but once we get a mismatch, we stop, as we have found the common prefix. We append zeros to the end of the common
+prefix to get the relevant number of bits, then we convert this to decimal, and we have the bitwise AND of all numbers in the range. This
+is illustrated with the examples below.
+
+m = 5, n = 7 => 4
+101 = 5
+111 = 7
+1 = common prefix = 100 = 4
+
 m = 7, n = 12 => 0
 0111 = 7
 1000 = 8
