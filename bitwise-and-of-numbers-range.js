@@ -106,6 +106,32 @@ m = 16, n = 20 => 16
 10000 = R = 16
 */
 
+/*
+Here is a solution which builds the commonPrefix of m and n.
+1) We first initialize an empty string commonPrefix, where we will store the common prefix between the binary representations of left
+   and right.
+2) We are working with 32 bit numbers, and we want to traverse from the most significant bit - the leftmost bit - to the least
+   significant bit. So we create a for loop that starts at 31 and ends at 0. Remember, every bit in binary represents a power of 2
+   and in a 32 bit number, that starts at 2 ** 0 (1) and finishes at 2 ** 31 (2147483648).
+3) k represents the bit position i.e. 31 (32nd bit) and 0 (1st bit). For each k, we perform a bitwise left shift to give us a number
+   where the only 1 bit will be in position k e.g. if k = 31, 1 << k = 2147483648 = 1000000000000000000000000000000.
+4) We can then use 1 << k to check whether there is a 1 bit in position k in left and right using bitwise AND. In bitwise AND, we
+   return 1 if there are corresponding 1 bits and 0 in all other cases. So for example, if k = 31 and left is 5, left1Bit will be
+   0 because the bitwise AND will come out to 00000000000000000000000000000000.
+5) left1Bit and right1Bit's exact return value is the bitwise AND of left/right and 1 << k. They will return a decimal number, which will
+   be 0 if there is not a 1 bit at k. If there is a 1 bit at k, they will return the number this 1 bit represents i.e. the power of 2.
+   For example, if k = 2, 1 << k = 4 = 100. When left or right is 5, 5 (101) & 4 (100) = 100 = 4.
+6) Now, if the left1Bit and right1Bit are both 0 at position k, we append a 0 to commonPrefix.
+7) If left1Bit and right1Bit are both not 0, we append a 1 to commonPrefix. Note that if this is ever the case, both left1Bit and
+   right1Bit are the same, because we are checking the bit in position k.
+8) In any other case, which will be when left1Bit and right1Bit are different, the previous bit was the end of the common prefix,
+   so we break out of the for loop.
+9) Now we have the common prefix between left and right's binary representations, we append zeros to create the 32 bit binary
+   number that will be our answer.
+10) In the case that there was a common prefix, we return the decimal representation of commonPrefix. In the case that there was no common
+    prefix, we return 0. This is the bitwise AND of all the numbers in the range.
+*/
+
 function rangeBitwiseAnd(left, right) {
   let commonPrefix = '';
   
