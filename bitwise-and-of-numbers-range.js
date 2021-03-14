@@ -153,6 +153,8 @@ function rangeBitwiseAnd(left, right) {
 }
 
 /*
+Here is a solution which instead of building the common prefix, increments the answer by the power of 2 that bit-k represents, when both
+left and right have 1 bits at position k and we are still inside the common prefix.
 */
 
 function rangeBitwiseAndX(left, right) {
@@ -175,11 +177,16 @@ function rangeBitwiseAndX(left, right) {
 }
 
 /*
+Here is a solution which instead of using bitwise shifts and bitwise AND, converts left and right to their 32 bit binary representations,
+then does a simple equality check, incrementing the answer by the power of 2 the current bit represents, when both the left and right
+bits are 1 and we are still inside the common prefix. Our iterator goes from 0..31, but because 0 will represent the bit that is 2 ** 31,
+1 will represent the bit that is 2 ** 30 and so forth, we have to increment answer by 2 ** (31 - i).
 */
 
 function rangeBitwiseAndXX(left, right) {
   left = left.toString(2).padStart(32, '0');
   right = right.toString(2).padStart(32, '0');
+
   let answer = 0;
   
   for (let i = 0; i < left.length; i++) {
@@ -199,16 +206,18 @@ function rangeBitwiseAndXX(left, right) {
 }
 
 /*
+Here is a function which finds the position of all the 1 bits in the binary representation of a number n, and returns an array of
+arrays where each sub-array contains the index position of the 1 bit and the power of 2 this index position represents.
 */
 
 function oneBitsOf(n) {
   let powersOf2 = [];
 
-  for (let k = 0; k < 30; k++) {
+  for (let k = 0; k <= 31; k++) {
     let powerOf2 = 1 << k;
 
     if (n & powerOf2) {
-      powersOf2.push([powerOf2, k]);
+      powersOf2.push([k, powerOf2]);
     }
   }
 
