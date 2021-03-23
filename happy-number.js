@@ -81,3 +81,35 @@ const sumOfSquaresMS = n => {
   let digits = n.toString().split('').map(Number);
   return digits.reduce((acc, v) => acc + (v ** 2), 0);
 }
+
+/*
+Here is a mathematical function for calculaing the sum of squared digits of a number.
+1) We initialize a variable called sum, where we will store the sum of squared digits, adding to it incrementally.
+2) We create a for loop which runs as long as n is above 0.
+3) In order to get the last digit mathemtical, we simply perform n modulo 10. For example, is n is 89, 89 / 10 = 8.9, the remainder here is
+   9, which is the last digit.
+4) We then increment the sum by the last digit squared.
+5) We then divide n by 10, and floor the result. For example, if n is 89, 89 / 10 = 8.9, the rounding down gives us 8.
+6) We repeat this process until n is 0.
+7) Once n is 0, the loop finishes, we return sum.
+8) This function squares the digits from right to left.
+
+sumOfSquares(6789)
+1) Iteration 1: n = 6789. lastDigit = 9. lastDigit ** 2 = 81. n / 10 (floored) = 678. sum = 81.
+2) Iteration 2: n = 678. lastDigit = 8. lastDigit ** 2 = 64. n / 10 (floored) = 67. sum = 145.
+3) Iteration 3: n = 67. lastDigit = 7. lastDigit ** 2 = 49. n / 10 (floored) = 6. sum = 194.
+4) Iteration 4: n = 6. lastDigit = 6. lastDigit ** 2 = 36. n / 10 (floored) = 0. sum = 230.
+5) n is 0, loop is broken out of, sum (230) is returned.
+*/
+
+const sumOfSquares = n => {
+  let sum = 0;
+
+  while (n) {
+    let lastDigit = n % 10;
+    sum += lastDigit ** 2;
+    n = Math.floor(n / 10);
+  }
+
+  return sum;
+}
