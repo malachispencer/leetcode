@@ -1,6 +1,7 @@
 /*
 Leetcode. 03/04/2021. Given an array of integers nums, move all 0s to the end of the array while preserving the order of the non-zero
-integers. For example, [0,1,0,3,12] should become [1,3,12,0,0]. Here is the solution I developed to solve the challenge.
+integers. For example, [0,1,0,3,12] should become [1,3,12,0,0]. The array must be changed in-place. Here is the solution I developed to 
+solve the challenge.
 1) We first ascertain a count of how many zeroes there are in the array, which we will use as the break condition of our while loop.
 2) We initialize a variable i, to keep track of the elements in nums.
 3) We run our while loop as long as zeroCount is above 0, each time we encounter a zero, we will decrement zeroCount, this ensures that
@@ -58,5 +59,60 @@ function moveZeroesMS(nums) {
   return nums;
 }
 
-console.log(moveZeroesMS([0,1,0,3,12]))
-console.log(moveZeroesMS([0,1,0]))
+/*
+Here is an alternative solution, which uses a tracker, two for loops and moves the non-zero elements to the beginning of the array, rather
+than moving the zero elements to the end of the array.
+1) We first initialize a variable called nextIndex to 0, this variable will keep track of the index position the next non-zero element
+   needs to be placed in.
+2) Our first for loop traverses the entire length of the array. If the current element is not zero, we make the element at index position
+   nextIndex, equal to the current element. We then increment nextIndex by 1. Because the next non-zero element we encounter will need to
+   come after where we just placed the current element.
+3) Once we finish this main for loop, all non zero elements have been moved to the front of the array, in-place, with their order preserved.
+4) nextIndex will have finished that for loop one index position after the last non-zero element, now all elements from nextIndex to the
+   end of the array, simply need to be converted to 0, in-place.
+5) We return nums.
+
+moveZeroes([0, 1, 0, 3, 12])
+1) The following iterations pertain to the main (first) for loop.
+2) Iteration 1:
+   - nums = [0, 1, 0, 3, 12]. i = 0. nums[i] = 0. nextIndex = 0.
+   - nums[i] is 0 so nothing happens.
+3) Iteration 2:
+   - nums = [0, 1, 0, 3, 12]. i = 1. nums[i] = 1. nextIndex = 0.
+   - nums[nextIndex] = 1.
+   - nextIndex + 1 = 1.
+   - nums = [1, 1, 0, 3, 12].
+4) Iteration 3:
+   - nums = [1, 1, 0, 3, 12]. i = 2. nums[i] = 0. nextIndex = 1.
+   - nothing happens.
+5) Iteration 4:
+   - nums = [1, 1, 0, 3, 12]. i = 3. nums[i] = 3. nextIndex = 1.
+   - nums[nextIndex] = 3.
+   - nextIndex + 1 = 2.
+   - nums = [1, 3, 0, 3, 12].
+6) Iteration 5:
+   - nums = [1, 3, 0, 3, 12]. i = 4. nums[i] = 12. nextIndex = 2.
+   - nums[nextIndex] = 12.
+   - nextIndex + 1 = 3.
+   - nums = [1, 3, 12, 3, 12].
+7) Now all non zero elements have been moved to the beginning of the array, we turn all the elements from nextIndex (3) to the end of the
+   array into 0.
+8) We return nums, which is [1, 3, 12, 0, 0].
+*/
+
+function moveZeroes(nums) {
+  let nextIndex = 0;
+  
+  for (let i = 0; i < nums.length; i++) {
+    if (nums[i] !== 0) {
+      nums[nextIndex] = nums[i];
+      nextIndex++;
+    }
+  }
+  
+  for (let i = nextIndex; i < nums.length; i++) {
+    nums[i] = 0;
+  }
+
+  return nums;
+}
