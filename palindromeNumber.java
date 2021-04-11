@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 /*
 Leetcode. 11/04/2021. Here we create a function that returns whether a number is a palindrome. A palindrome is a number or word that is
 exactly the same when reversed. Here is the solution I developed to solve the challenge.
@@ -19,13 +21,25 @@ exactly the same when reversed. Here is the solution I developed to solve the ch
 10) At any point in our for loop, if left and right are different, we return false because the number is definitely not a palindrome. 
 11) In Java, there is no strict equality (===) operator like in JavaScript, only == and !=, which compare values when used with
     primitive data types.
-12) If we made it out of our for loop without returning false, the number is a palindrome, so we return true. 
+12) If we made it out of our for loop without returning false, the number is a palindrome, so we return true.
+
+isPalindromeX
+1) We first convert the integer to a string.
+2) We then pass the string number into our reverse function, which reverses a string by creating a StringBuilder object, appending each
+   character to the StringBuilder object from right to left, then returning it in string format.
+3) We then use the Object.equals() method to check whether the number and its reverse are the same.
+4) In Java, Strings are not primitive data types, they are reference types. Therefore, we cannot use the equality operator (==) to check
+   whether two strings have the same value, as for reference types, the equality operator checks whether they are the exact same object
+   i.e. stored at the same place in memory.
+5) Instead, we use the equals() method, or even better, the Object.equals() method, because equals() will throw an exception is comparing
+   strings that contain null, whereas Object.equals() won't.
 */
 
 
 public class palindromeNumber {
   public static void main(String[] args) {
-    System.out.println(isPalindrome()); 
+    //System.out.println(isPalindrome());
+    //System.out.println(isPalindromeX());
   }
 
   public static boolean isPalindrome(int num) {
@@ -43,5 +57,21 @@ public class palindromeNumber {
     }
 
     return true;
+  }
+
+  public static boolean isPalindromeX(int num) {
+    String number = Integer.toString(num);
+    String reversed = reverse(number);
+    return Objects.equals(number, reversed);
+  }
+
+  public static String reverse(String str) {
+    StringBuilder reversed = new StringBuilder();
+    
+    for (int i = str.length() - 1; i >= 0; i--) {
+      reversed.append(str.charAt(i));
+    }
+    
+    return reversed.toString();
   }
 }
